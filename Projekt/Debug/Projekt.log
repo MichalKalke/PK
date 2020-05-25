@@ -1,0 +1,5 @@
+﻿  Projekt.c
+C:\Users\michal\source\repos\PK\Projekt\Projekt\Projekt.c(27,18): warning C4244: "funkcja": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+C:\Users\michal\source\repos\PK\Projekt\Projekt\Projekt.c(33,27): warning C4133: "=": niezgodne typy - od "char *" do "GameAnimal_type *"
+C:\Users\michal\source\repos\PK\Projekt\Projekt\Projekt.c(36,9): warning C4477: „printf”: ciąg formatu „%s” wymaga argumentu typu „char *”, ale argument 1 ze zmienną liczbą argumentów ma typ „GameAnimal_type *”
+  Projekt.vcxproj -> C:\Users\michal\source\repos\PK\Projekt\Debug\Projekt.exe
