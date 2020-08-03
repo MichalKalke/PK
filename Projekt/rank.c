@@ -38,8 +38,7 @@ void nickToFile(Score_type** head2) {
 void deleteGamer(Score_type** head2) {
 	Score_type* current = *head2;
 	Score_type* nextCurrent;
-	while (current != NULL)
-	{
+	while (current != NULL) {
 		nextCurrent = current->next;
 		free(current);
 		current = nextCurrent;
@@ -55,11 +54,9 @@ void addToLeader(Score_type** head2, char* nick, int score) {
 		(*head2)->score = score;
 		(*head2)->next = NULL;
 	}
-	else
-	{
+	else {
 		Score_type* current = *head2;
-		while (current->next != NULL)
-		{
+		while (current->next != NULL) {
 			current = current->next;
 		}
 		current->next = (Score_type*)malloc(sizeof(Score_type));
@@ -74,14 +71,12 @@ void sortRank(Score_type** head2) {
 		return;
 	}
 	Score_type* nextCurrent = (*head2)->next;
-	while (nextCurrent != NULL)
-	{
+	while (nextCurrent != NULL) {
 		int tmp = nextCurrent->score;
 		char* nick = nextCurrent->name;
 		int found = 0;
 		Score_type* current = *head2;
-		while (current != nextCurrent)
-		{
+		while (current != nextCurrent) {
 			if (current->score < nextCurrent->score && found == 0) {
 				tmp = current->score;
 				nick = current->name;
@@ -90,8 +85,7 @@ void sortRank(Score_type** head2) {
 				found = 1;
 				current = current->next;
 			}
-			else
-			{
+			else {
 				if (found == 1) {
 					int tmp2 = tmp;
 					char* nick2 = nick;
@@ -131,8 +125,7 @@ void showLeader(Score_type* head2) {
 		printf("lista jest pusta!\n");
 		return;
 	}
-	while (temp != NULL)
-	{
+	while (temp != NULL) {
 		printf("Gracz %s zdobyl %d", temp->name, temp->score);
 		temp = temp->next;
 		printf("\n");
