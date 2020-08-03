@@ -23,14 +23,11 @@ void DrawFromList(GameAnimal_type* head, int* p) {
 }
 
 void playGame(Score_type** head2, GameAnimal_type* p) {
-	int scoreGame = 0;
+	int scoreGame = 0, cmp;
 	char shot[15];
-	int cmp;
 	char* instruction = "Wpisz zwierze, ale bez polskich znakow\n";
 	printf("%s", instruction);
-	printf("Gatunek: %s\n", p->specie);
-	printf("%s\n jest to:", p->clueOne);
-	//printf("%s\n", p->animal);
+	printf("Gatunek: %s\n%s\njest to: ", p->specie, p->clueOne);
 	scanf_s("%14s", shot, (unsigned)_countof(shot));
 	cmp = strcmp(shot, p->animal);
 	if (cmp == 0) {
@@ -41,18 +38,15 @@ void playGame(Score_type** head2, GameAnimal_type* p) {
 		scanf_s("%14s", shot, (unsigned)_countof(shot));
 		cmp = strcmp(shot, p->animal);
 		while ((getchar()) != '\n');
-		if (cmp == 0)
-		{
+		if (cmp == 0) {
 			scoreGame = scoreGame + 50;
 		}
-		else
-		{
+		else {
 			printf("%s\n jest to: ", p->clueThree);
 			scanf_s("%14s", shot, (unsigned)_countof(shot));
 			cmp = strcmp(shot, p->animal);
 			while ((getchar()) != '\n');
-			if (cmp == 0)
-			{
+			if (cmp == 0) {
 				scoreGame = scoreGame + 10;
 			}
 			else
@@ -65,8 +59,7 @@ void playGame(Score_type** head2, GameAnimal_type* p) {
 void addToFile() {
 	FILE* file;
 	char s[100], a[100], cO[100], cT[100], cTh[100];
-	char array[100] = "\n";
-	char hash[10] = "#";
+	char array[100] = "\n", hash[10] = "#";
 	printf("Podaj gatunek: ");
 	gets_s(s, 100);
 	strcat_s(array, 100, s);
@@ -103,11 +96,9 @@ void toTheList(GameAnimal_type** head, char* sp, char* ani, char* cOne, char* cT
 		(*head)->clueThree = cThree;
 		(*head)->next = NULL;
 	}
-	else
-	{
+	else {
 		GameAnimal_type* current = *head;
-		while (current->next != NULL)
-		{
+		while (current->next != NULL) {
 			current = current->next;
 		}
 		current->next = (GameAnimal_type*)malloc(sizeof(GameAnimal_type));
@@ -122,11 +113,7 @@ void toTheList(GameAnimal_type** head, char* sp, char* ani, char* cOne, char* cT
 
 void openFile(char* bufor, GameAnimal_type** head) {
 	FILE* file;
-	char* sp = " ";
-	char* ani = " ";
-	char* cOne = " ";
-	char* cTwo = " ";
-	char* cThree = " ";
+	char* sp = " ", ani = " ",  cOne = " ", cTwo = " ",  cThree = " ";
 	char corector[] = "#";
 	if (fopen_s(&file, "test.txt", "r") == 0) {
 		while (fgets(bufor, 1024, file) != NULL) {
@@ -144,8 +131,7 @@ void openFile(char* bufor, GameAnimal_type** head) {
 deleteAnimal(GameAnimal_type** head) {
 	GameAnimal_type* current = *head;
 	GameAnimal_type* nextCurrent;
-	while (current != NULL)
-	{
+	while (current != NULL) {
 		nextCurrent = current->next;
 		free(current);
 		current = nextCurrent;
@@ -153,10 +139,23 @@ deleteAnimal(GameAnimal_type** head) {
 	*head = NULL;
 }
 
+void yourChoice(GameAnimal_type** head, Score_type** head2) {
+	int choice;
+	scanf_s("%d", &choice);
+	if (choice == 1) {
+		deleteAnimal(&head);
+		nickToFile(&head2);
+	}
+	else {
+		deleteGamer(&head2);
+		deleteAnimal(&head);
+	}
+}
+
 void playTheGame() {
 	char* p;
 	char bufor[1024];
-	int choice, menu;
+	int menu;
 	GameAnimal_type* head;
 	head = (GameAnimal_type*)malloc(sizeof(GameAnimal_type));
 	head = NULL;
@@ -166,8 +165,7 @@ void playTheGame() {
 	printf("Witaj w grze Zgadnij jakie to zwierze!\n Wybierz co chcesz zrobic\n 1 zagraj\n 2 Dodaj nowe zwierze\n 3 Wyswietl tablice wynikow\n Inne zakoncz program\n:");
 	scanf_s("%d", &menu);
 	while ((getchar()) != '\n');
-	switch (menu)
-	{
+	switch (menu) {
 	case 1:
 		openFile(bufor, &head);
 		printf("Podaj swoj nick:\n");
@@ -177,15 +175,7 @@ void playTheGame() {
 			playGame(&head2, p);
 		}
 		printf("Wynik gracza %s to %d \n Czy chcesz zapisac wynik? \n 1. Tak 2. Nie \n", head2->name, head2->score);
-		scanf_s("%d", &choice);
-		if (choice == 1) {
-			deleteAnimal(&head);
-			nickToFile(&head2);
-		}
-		else {
-			deleteGamer(&head2);
-			deleteAnimal(&head);
-		}
+		yourChoice(&head, &head2);
 		break;
 	case 2:
 		addToFile();
